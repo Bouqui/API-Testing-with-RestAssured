@@ -3,13 +3,30 @@
 <suite name="All Test Suite">
     <test verbose="2"  name="Test">
         <classes>
-            <class name="tests.FavQuote"></class>
-            <class name="tests.ListLogin">
+            <class name="tests.FavQuote">
                 <methods>
-                    <include name="markQuoteAsFav"/>
+                    <include name="markQuoteAsFavWithNoSession"/>
+                    <include name="markQuoteAsFavWithValidQuoteId"/>
+                    <include name="markQuoteAsFavWithInvalidQuoteId"/>
+                    <include name="unfavAQuoteWithNoSession"/>
+                    <include name="unfavAQuoteUsingValidQuoteId"/>
+                    <include name="unfavAQuoteUsingInValidQuoteId"/>
+                </methods>
+            </class>
+
+            <class name="tests.ListQuote">
+                <methods>
                     <include name="getListOfQuotes"/>
+                    <include name="getListOfQuotesWithBadToken"/>
                     <include name="getListOfQuotesByAuthor"/>
+                    <include name="getListOfQuotesByAuthorUsingBadToken"/>
                     <include name="getListOfQuotesThatContainsFunny"/>
+                    <include name="getListOfQuotesThatContainsFunnyUsingBadToken"/>
+                    <include name="getListOfQuoteWithATag"/>
+                    <include name="getListOfQuoteWithATagUsingBadToken"/>
+                    <include name="getAllHiddenQuotes"/>
+                    <include name="getAllHiddenQuotesUsingBadToken"/>
+
                 </methods>
             </class>
         </classes>
