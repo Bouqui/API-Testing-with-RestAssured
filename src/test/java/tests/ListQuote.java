@@ -38,8 +38,16 @@ public class ListQuote extends BaseTest {
         System.out.println(specificAuthor);
     }
 
+    @Test (priority = 2)
+    public void getListOfQuotesWithBadToken(ITestContext context) {
+        given()
+                .headers(getHeaderWithBadToken())
+                .when().get()
+                .then().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .log().all();
+    }
 
-    @Test(priority = 2)
+    @Test(priority = 3)
     public void getListOfQuotesByAuthor(ITestContext context) {
         String authorValue = (String) context.getAttribute("author");
         List<String> authorList =
@@ -54,7 +62,17 @@ public class ListQuote extends BaseTest {
 
     }
 
-    @Test(priority = 3)
+    @Test(priority = 4)
+    public void getListOfQuotesByAuthorUsingBadToken(ITestContext context) {
+        String authorValue = (String) context.getAttribute("author");
+        given()
+                .headers(getHeaderWithBadToken())
+                .when().get("/?filter=" + authorValue + "&type=author")
+                .then().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .log().all();
+    }
+
+    @Test(priority = 5)
     public void getListOfQuotesThatContainsFunny() {
         List<String> words =
                 given()
@@ -67,7 +85,16 @@ public class ListQuote extends BaseTest {
         Assert.assertTrue(words.get(0).contains("funny"));
     }
 
-    @Test(priority = 4)
+    @Test(priority = 6)
+    public void getListOfQuotesThatContainsFunnyUsingBadToken() {
+                given()
+                        .headers(getHeaderWithBadToken())
+                        .when().get("/?filter=funny")
+                        .then().statusCode(HttpStatus.SC_UNAUTHORIZED);
+
+    }
+
+    @Test(priority = 7)
     public void getListOfQuoteWithATag() {
         List tags =
                 given()
@@ -78,14 +105,31 @@ public class ListQuote extends BaseTest {
                         .jsonPath().getList("quotes.tags");
         Assert.assertTrue(tags.toString().contains("funny"));
     }
+    @Test(priority = 8)
+    public void getListOfQuoteWithATagUsingBadToken() {
+                given()
+                        .headers(getHeaderWithBadToken())
+                        .when().get("/?filter=funny&type=tag")
+                        .then().statusCode(HttpStatus.SC_UNAUTHORIZED);
 
-    @Test
+    }
+    @Test (priority = 9)
     public void getAllHiddenQuotes() {
         given()
                 .headers(getHeaderWithToken())
                 .when()
                 .get("/?hidden=1")
                 .then().statusCode(HttpStatus.SC_OK)
+                .log().all();
+    }
+
+    @Test(priority = 10)
+    public void getAllHiddenQuotesUsingBadToken() {
+        given()
+                .headers(getHeaderWithBadToken())
+                .when()
+                .get("/?hidden=1")
+                .then().statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .log().all();
     }
 
