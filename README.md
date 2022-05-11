@@ -10,3 +10,8 @@
 
 Note - For FavQuote.class file, a session has to be created before some tests can be run
 Also, getListOfQuotes scenario should be run before getListOfQuotesByAuthor scenario 
+
+
+# Scenaios not implemented 
+1. The CreateSession scenario was not implemented due to error 500 when the method is called. This blocked me from testing the FavQuote methods properly 
+2. The plan was to create new Quotes using the AddQuote method so I don't have to hardcode the quoteIds in the FavQuote scenarios but I was unable to achieve that because a user session has to be created before that can be done 
